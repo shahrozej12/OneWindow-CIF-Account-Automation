@@ -36,4 +36,13 @@ It demonstrates automation engineering skills including:
 - Test scenarios are written in **Gherkin** for clarity and readability
 - Step definitions follow **modular design principles**
 - Focus is on demonstrating **automation methodology**, not on running the enterprise application
+
+----
+
+## Contact
+Shahroze Janjua
+Email: shahreyrana9@gmail.com
+LinkedIn: https://www.linkedin.com/in/shahroze-janjua-baa58515a
+
+This project is part of my professional automation portfolio, highlighting my skills in Selenium, Java, and BDD for enterprise banking systems.
     
