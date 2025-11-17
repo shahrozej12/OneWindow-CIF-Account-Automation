@@ -42,6 +42,7 @@ It demonstrates automation engineering skills including:
 ## Contact
 Shahroze Janjua
 Email: shahreyrana9@gmail.com
+
 LinkedIn: https://www.linkedin.com/in/shahroze-janjua-baa58515a
 
 This project is part of my professional automation portfolio, highlighting my skills in Selenium, Java, and BDD for enterprise banking systems.
