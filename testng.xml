@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Cucumber Suite" parallel="false">
+    <test name="Cucumber Test">
+        <parameter name="continueAfterFailure" value="true"/>
+        <classes>
+            <class name="runners.TestRunner"/>
+        </classes>
+        <listeners>
+            <listener class-name="define.TestNGListener"/>
+        </listeners>
+    </test>
+</suite>
