@@ -142,7 +142,7 @@ public class XPathLocators {
 
 
         public static final String SendToSupervisor = "//button[normalize-space()='Send To Supervisor']";
-        public static final String SendToSupervisor_YES = "//button[normalize-space()='YES']";
+        public static final String SendToSupervisor_YES = "//button[normalize-space()='Yes']";
         public static final String Approve_Back = "//input[@value='Back']";
 
 //        New Images Upload
@@ -163,7 +163,7 @@ public class XPathLocators {
             //Tracking ID and CIF No Xpath
             public static String TRACKING_INFO = "//span[contains(text(),'Tracking Id:')]";
             public static String CIF_NO = "//span[contains(text(),'Cif No#')]";
-            public static String Back_To_Market_Place ="//button[normalize-space()='Back to Market Place']";
+            public static String Back_To_Market_Place ="//button[normalize-space()='Back to Marketplace']";
             public static String Checker_DropDown = "//input[@type='text']//following::span[@class='ng-arrow-wrapper']";
             // XPath for the options inside the dropdown (you can modify this if the structure changes)
             public static String Checker_Select = "//span[normalize-space()='%s']";

@@ -15,9 +15,13 @@ import define.ImageUploadHelper;
 import define.AutoITHandler;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.*;
+import define.VideoRecorder;
+import io.cucumber.java.Scenario;
+
 import java.util.List;
 import define.ExcelHelper;
 
@@ -37,6 +41,8 @@ public class loginsteps {
     private MyAutomation automation;
     private Checker_Tracking_CIF trackingCif;
     private RequestApprovalSteps requestApprovalSteps;
+    private VideoRecorder recorder;
+
 
     public loginsteps() {
         automation = new MyAutomation();
@@ -44,16 +50,35 @@ public class loginsteps {
     }
 
     @Before
-    public void setup()  {
-        ChromeOptions options = new ChromeOptions();
+    public void setup(Scenario scenario) throws Exception {
 
+        // Setup Chrome
+        ChromeOptions options = new ChromeOptions();
         options.setBinary("C:\\Users\\Shahroze.Janjua\\Downloads\\chrome-win64_stable\\chrome-win64\\chrome.exe");
 
-
-
         driver = new ChromeDriver(options);
+        driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(45));
+        // Initialize recorder
+        recorder = new VideoRecorder();
 
+        // Ensure recordings folder exists
+        File folder = new File("recordings");
+        if (!folder.exists()) folder.mkdirs();
+
+        // Create video file name
+        String videoFile = "recordings/" + scenario.getName().replaceAll("[^a-zA-Z0-9]", "_") + ".mp4";
+
+        // Start recording
+        recorder.startRecording(videoFile);
+
+        // Add shutdown hook: ensures recording stops even if test is manually stopped
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            if (recorder != null && recorder.isRecording()) {
+                recorder.stopRecording();
+                System.out.println("Recording stopped via shutdown hook.");
+            }
+        }));
 
     }
 
@@ -61,12 +86,11 @@ public class loginsteps {
     @Given("I am on the login page")
     public void i_am_on_the_login_page() {
         driver.get("https://uatcbao.jsbl.com:9060/login");
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(45));
         cifHelpers = new CIF_actions(driver);
         accHelpers = new Account_actions(driver);
         trackingCif = new Checker_Tracking_CIF(driver);
         requestApprovalSteps = new RequestApprovalSteps(driver);
+
 
     }
 
@@ -82,8 +106,23 @@ public class loginsteps {
     @When("I log in")
     public void i_log_in() {
         driver.findElement(By.xpath(XPathLocators.LOGIN_BUTTON)).click();
-        WebElement skipBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(XPathLocators.SkipIt)));
-        skipBtn.click();
+        runThreadsAfterFormSubmission();
+        try {
+            WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(7));
+
+            WebElement skipBtn = shortWait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(XPathLocators.SkipIt))
+            );
+
+            skipBtn.click();
+            System.out.println("Skip button clicked.");
+
+        } catch (Exception e) {
+            // Element not found → continue test
+            System.out.println("Skip button not present, moving ahead.");
+        }
+
+// Continue normal wait
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(XPathLocators.Customer_UAT)));
     }
 
@@ -149,9 +188,9 @@ public class loginsteps {
             setDateUsingJavaScript(XPathLocators.DOB, dateofBirth);
 
             cifHelpers.selectCustomerSegment(XPathLocators.SECTOR_CODE_DROPDOWN, data.get("Sector Code"));
-            pause(1000);
+            pause(2000);
             cifHelpers.selectNationality(XPathLocators.NATIONALITY_DROPDOWN, data.get("Nationality"));
-            pause(1000);
+            pause(2000);
             cifHelpers.selectAssanAccount(XPathLocators.ASAN_ACCOUNT_DROPDOWN, data.get("Assan Account"));
             pause(1000);
             cifHelpers.selectMarital(XPathLocators.MARITAL_STATUS_DROPDOWN, data.get("Marital Status"));
@@ -259,7 +298,7 @@ public class loginsteps {
         }
         cifHelpers.selectAddressType(XPathLocators.ADDRESS_TYPE, data.get("Address Type"));
         pause(1000);
-            cifHelpers.selectProvince(XPathLocators.PROVINCE, data.get("Province"));
+        cifHelpers.selectProvince(XPathLocators.PROVINCE, data.get("Province"));
         pause(1000);
         cifHelpers.selectEmployee_Status(XPathLocators.EMP_STATUS, data.get("Employee Status"));
         pause(1000);
@@ -301,36 +340,20 @@ public class loginsteps {
         // Cell Mobile Number Validation
         String cellCountryCode = data.get("Cell Country Code");
         String cellMobileNumber = data.get("Cell Mobile Number");
-        if ("Pakistan".equalsIgnoreCase(cellCountryCode)) {
-            // Ensure cell mobile number starts with "03" and is exactly 11 digits long
-            if (cellMobileNumber.startsWith("03") && cellMobileNumber.length() == 11 && cellMobileNumber.matches("\\d{11}")) {
-                cifHelpers.selectCellCountryCode(XPathLocators.Cell_Country_Code, cellCountryCode);
+        cifHelpers.selectCellCountryCode(XPathLocators.Cell_Country_Code, cellCountryCode);
                 pause(1000);
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(XPathLocators.Cell_No)))
                         .sendKeys(cellMobileNumber);
                 pause(1000);
-            } else {
-                throw new IllegalArgumentException("Invalid Cell Mobile Number for Pakistan: Must start with '03' and be exactly 11 digits.");
-            }
-        } else {
-            // If not Pakistan, just ensure the number is exactly 11 digits
-            if (cellMobileNumber.length() == 11 && cellMobileNumber.matches("\\d{11}")) {
-                cifHelpers.selectCellCountryCode(XPathLocators.Cell_Country_Code, cellCountryCode);
-                pause(1000);
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(XPathLocators.Cell_No)))
-                        .sendKeys(cellMobileNumber);
-                pause(1000);
-            } else {
-                throw new IllegalArgumentException("Invalid Cell Mobile Number: Must be exactly 11 digits.");
-            }
-        }
+
+
 
         // Residence Phone Number Validation
         String resCountryCode = data.get("Residence Country Code");
         String resPhoneNumber = data.get("Residence Phone Number");
         if ("Pakistan".equalsIgnoreCase(resCountryCode)) {
             // Ensure residence phone number starts with "03" and is exactly 11 digits long
-            if (resPhoneNumber.startsWith("03") && resPhoneNumber.length() == 11 && resPhoneNumber.matches("\\d{11}")) {
+            if (resPhoneNumber.startsWith("02") && resPhoneNumber.length() == 11 && resPhoneNumber.matches("\\d{11}")) {
                 cifHelpers.selectResCounryCode(XPathLocators.Res_Country_Code, resCountryCode);
                 pause(1000);
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(XPathLocators.Res_No)))
@@ -382,7 +405,7 @@ public class loginsteps {
     }
 
     @When("I fill in the Account Detail:")
-    public void iFillInTheAccountDetail(io.cucumber.datatable.DataTable dataTable) {
+    public void     iFillInTheAccountDetail(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> data = dataTable.asMap(String.class, String.class);
 
 
@@ -455,11 +478,11 @@ public class loginsteps {
         pause(1000);
 
 
-        //        accHelpers.selectExpMonDebTurn(XPathLocators.Exp_Mon_Deb_Turn, data.get("Expected Monthly Debit Turnover"));
-        //        pause(1000);
-        //
-        //        accHelpers.selectExpMonCredTurn(XPathLocators.Exp_Mon_Cred_Turn, data.get("Expected Monthly Credit Turnover"));
-        //        pause(1000);
+//                accHelpers.selectExpMonDebTurn(XPathLocators.Exp_Mon_Deb_Turn, data.get("Expected Monthly Debit Turnover"));
+//                pause(1000);
+
+                accHelpers.selectExpMonCredTurn(XPathLocators.Exp_Mon_Cred_Turn, data.get("Expected Monthly Credit Turnover"));
+                pause(1000);
 
         accHelpers.selectProvince(XPathLocators.Province, data.get("Provinces"));
         pause(1000);
@@ -482,28 +505,21 @@ public class loginsteps {
         }
 
         pause(1000);
-        // Handle E-Statement logic
-        accHelpers.selectEStatement(XPathLocators.E_Statement, data.get("E-Statement"));
-        pause(1000);
+//        // Handle E-Statement logic
+//        accHelpers.selectEStatement(XPathLocators.E_Statement, data.get("E-Statement"));
+//        pause(1000);
 
-        if (data.get("E-Statement").equalsIgnoreCase("YES")) {
-            // Enable E-Statement Frequency
-            accHelpers.selectEStatementFreq(XPathLocators.E_Statement_Freq, data.get("E-Statement Frequency"));
-            pause(1000);
-        } else {
-            System.out.println("Working E-statement");
-        }
-
-        // Handle SMS Alert logic
+//        if (data.get("E-Statement").equalsIgnoreCase("YES")) {
+//            // Enable E-Statement Frequency
+//            accHelpers.selectEStatementFreq(XPathLocators.E_Statement_Freq, data.get("E-Statement Frequency"));
+//            pause(1000);
+//        } else {
+//            System.out.println("Working E-statement");
+//        }
+//
+//        // Handle SMS Alert logic
         accHelpers.selectSMSAlert(XPathLocators.Sms_alert, data.get("SMS Alert"));
         pause(1000);
-        if (data.get("SMS Alert").equalsIgnoreCase("YES")) {
-            accHelpers.selectMobileTelecom(XPathLocators.Mob_telecom, data.get("Mobile Telecom"));
-            pause(1000);
-        } else {
-            System.out.println("Working Sim");
-
-        }
 
 
         accHelpers.selectInternetBanking(XPathLocators.Internet_bank, data.get("Internet Banking"));
@@ -631,17 +647,7 @@ public class loginsteps {
             String filePath = row.get("File Path");          // Get the file path
 
 
-            System.out.println("Nationality: " + nationality);
-            System.out.println("Processing document: " + documentName + " with file path: " + filePath);
 
-            // Check if nationality is "Pakistan" and skip "CRS Form" and "IRS Form"
-            if (nationality.equalsIgnoreCase("Pakistan")) {
-                // Skip CRS and IRS Form if nationality is Pakistan
-                if (documentName.equalsIgnoreCase("CRS Form") || documentName.equalsIgnoreCase("IRS Form")) {
-                    System.out.println("Skipping document: " + documentName); // Debugging log
-                    continue;  // Skip the rest of the logic for these documents
-                }
-            }
 
             // Upload the document if it’s not skipped
             uploadFile(documentName, filePath);
@@ -671,15 +677,21 @@ public class loginsteps {
         waitUntilSpinnerIsInvisible();
     }
 
-    // After hook to close the browser after each scenario
     @After
-    public void closeBrowser() {
+    public void tearDown(Scenario scenario) {
+        // Stop video recording first
+        if (recorder != null && recorder.isRecording()) {
+            recorder.stopRecording();
+            System.out.println("Recording stopped for scenario: " + scenario.getName());
+        }
+
+        // Then close browser
         if (driver != null) {
             driver.quit();
-            pause(2000);// Close the browser and end the session
+            pause(2000); // optional, wait to ensure browser closes
+            System.out.println("Browser closed for scenario: " + scenario.getName());
         }
     }
-
 
     @And("Go Back To Market Place")
     public void goBackToMarketPlace() {
@@ -869,6 +881,7 @@ public class loginsteps {
             runThreadsAfterFormSubmission(); // Create and run fresh threads each time
         }
     }
+
 
 
 

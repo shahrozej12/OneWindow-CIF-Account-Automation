@@ -5,7 +5,7 @@ Feature: Customer Information Form Submission
     And I fill in the login information:
       | Field      | Value                 |
       | username   | shahroze.janjua         |
-      | password   | Nuzhat.123               |
+      | password   | Nuzhat.321              |
     Then I log in
 
   @Self_Employed
@@ -17,7 +17,7 @@ Feature: Customer Information Form Submission
         | Field                     | Value                           |
         | Customer Category          | INDIVIDUAL - CIF AND ACCOUNT    |
         | ID Document Type           | ID-N - CNIC                     |
-        | ID Document Number         |                     |
+        | ID Document Number         | 4210122390312                 |
         | CNIC Issuance Date         | 2024-11-05 |
         | CNIC Expiry Date           | 2025-08-05 |
         | VISA Expiry Date           | 2026-11-22 |
@@ -28,11 +28,11 @@ Feature: Customer Information Form Submission
       | Marital Status             | SINGLE                          |
       | Customer Title             | Mr.                             |
       | Gender                     | MALE                            |
-      | First Name                 | Atif                             |
+      | First Name                 | Javed                             |
       | Middle Name                | Asad                          |
-      | Last Name                  | Aslam                            |
-      | Father's Name              | VIN                       |
-      | Mother's Name              | ADELE                           |
+      | Last Name                  | das                            |
+      | Father's Name              | Paul                       |
+      | Mother's Name              | ALina                           |
       | Occupation                 | 133 - PRIVATE SERVICE             |
       | Industry Code              | 5101 - Arms Manufacturer/Arms Dealer                        |
       | Tax Reason (CRS)           | REASON A                        |
@@ -60,10 +60,10 @@ Feature: Customer Information Form Submission
 
     And I fill in the Contact Detail:
       | Field                         | Value                     |
-      | Cell Country Code             | Pakistan                  |
-      | Cell Mobile Number            | 03218795325               |
+        | Cell Country Code             | Pakistan                  |
+      | Cell Mobile Number            | 03232858781              |
       | Residence Country Code       | Pakistan                  |
-      | Residence Phone Number       | 03007895623               |
+      | Residence Phone Number       | 02207895623                   |
       | Residential Address Line 1    | District East             |
       | Residential Address Line 2    | District West             |
       | Email Address                 | john@gmail.com        |
@@ -100,7 +100,7 @@ Feature: Customer Information Form Submission
       | Type of Transactions               | Internal Transfers                        |
       | Expected Modes of Transaction      | Internet Bankng                       |
       | Expected Counter Parties           | Individual                           |
-      | Expected Monthly Debit Transactions| 070                        |
+      | Expected Monthly Debit Transactions| 100                        |
       | Expected Monthly Credit Transactions| 100                       |
       | Expected Monthly Debit Turnover    | 1000000                       |
       | Expected Monthly Credit Turnover   | 25000000                       |
@@ -119,31 +119,30 @@ Feature: Customer Information Form Submission
       | Internet Banking                   | YES                          |
       | Mobile Banking                     | YES                          |
       | Account Country                    | PK - Pakistan                     |
-      | Account Officer                    | 29036060 - Sarghoda Branch - FIG                     |
+      | Account Officer                    | 19585280 - New Challi Khi Branch Head ope                     |
       | Gender (Account)                   | MALE                       |
       | Account KYC Remarks                | KYC passed                   |
 
     Then Submit the form
 
-#    And Uploading Files:
-#      | Document Name      | File Path                           |
-#      | IF ACCOUNT RISK LEVE   | D:/CIF_Image_Auto/AOF.PNG|
-#      | ID Document        | D:/CIF_Image_Auto/Id Document.PNG    |
-#      | Crop and Upload Signature        | C:/IRS.PNG    |
-#      | CRS Form   | D:/CIF_Image_Auto/CRS.PNG|
-#      | IRS Form   | C:/IRS.PNG|
-#      | Specimen Signature Card    | D:/CIF_Image_Auto/SSC.jpg|
-#      | Assan Self Declaration    | D:/CIF_Image_Auto/POI.PNG|
+    And Uploading Files:
+      | Document Name      | File Path                           |
+  |   IF ACCOUNT RISK LEVEL HIGH AND BUSINESS | D:/CIF_Image_Auto/AOF.PNG|
+  | Attested copy of CNIC   | D:/CIF_Image_Auto/AOF.PNG|
+      | Proof of Income        | D:/CIF_Image_Auto/Id Document.PNG    |
+      | Crop and Upload Signature Image Only        | C:/IRS.PNG    |
+      | Nadra Verysis   | D:/CIF_Image_Auto/CRS.PNG|
+      | Specimen Signature Card    | D:/CIF_Image_Auto/SSC.jpg|
 
 
 
-#    Then Send To Supervisor
-#    And Go Back To Market PlaceT
-#    And Select "CHECKER"
-#    And I navigate to customer information UA
-#    And I search and click the Tracking Id
-#    And Enter Comments "Approved" and Press "Request Approve" and Press "YES"
-#    Then Go Back
+    Then Send To Supervisor
+    And Go Back To Market Place
+    And Select "CHECKER"
+    And I navigate to customer information UAT
+    And I search and click the Tracking Id
+    And Enter Comments "Approved" and Press "Request Approve" and Press "YES"
+    Then Go Back
 #    And Open T24 environment
 #    And I fill enter Login Credentials for T24:
 #      | Field      | Value                 |
