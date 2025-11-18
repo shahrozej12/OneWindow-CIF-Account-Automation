@@ -54,6 +54,19 @@ This architecture demonstrates **clean separation of test logic, business steps,
 
 ---
 
+## 🎥 Automation Recording
+A **screen recording of the automated workflow** is included in the repository.  
+It demonstrates:  
+
+- Fully automated CIF and account creation flows  
+- Execution of multiple scenarios defined in Gherkin  
+- Pure automation without any manual intervention  
+
+**Path in repository:** `/recordings/Submit_customer_information_where_Sector_Code_is_1019___Self_Employed.mp4`  
+*(Recruiters and stakeholders can review the live automation workflow here.)*
+
+---
+
 ## 📬 Contact
 **Shahroze Janjua**  
 📧 Email: shahreyrana9@gmail.com  
