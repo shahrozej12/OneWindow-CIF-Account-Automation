@@ -1,57 +1,56 @@
 # OneWindow CIF & Account Automation Framework
 Automated **Customer Information Form (CIF)** and **Account creation workflows** for the One Window banking application using **Selenium**, **Java**, and **Cucumber (BDD)**.  
 
-This project highlights my **enterprise-level automation expertise** and demonstrates how I build scalable, maintainable, and professional automation frameworks for banking applications.
+This project demonstrates **enterprise-level automation** for banking workflows, showing my ability to implement **fully automated, maintainable, and modular test frameworks**.
 
 ---
 
 ## 🌍 Overview
-This automation framework showcases my ability to implement **robust, modular, and reusable test automation** for complex banking workflows.  
+This project highlights my expertise in **automation engineering and BDD methodology** within a complex enterprise banking system.  
+
 Key aspects include:
 
-- Automating CIF and account creation workflows in One Window banking application  
-- **Excel-driven, data-driven automation** to handle multiple customer entries and test scenarios  
-- Managing empty-field or partial-data workflows efficiently  
-- Demonstrating enterprise automation methodology, with focus on **reusability and maintainability**  
+- Fully automated CIF and account creation workflows in One Window banking application  
+- Structured and readable **Cucumber (BDD) test scenarios** using Gherkin syntax  
+- Automation executed entirely without manual intervention  
+- Demonstrates **scalable, reusable, and maintainable automation frameworks** for enterprise applications  
 
-⚠️ **Note:** This framework is designed for an enterprise environment. It cannot run outside the banking application. The repository demonstrates my automation skills and methodology.
+⚠️ **Note:** This project is designed for an enterprise environment. The code cannot run outside the One Window application but demonstrates my automation skills.
 
 ---
 
 ## 🎯 Key Achievements
 - Automated **end-to-end CIF and account creation workflows**  
-- Built **reusable step definitions and modular components** for scalable test automation  
-- Designed **data-driven automation using Excel** for multiple customer scenarios  
-- Structured tests for **easy extension, maintainability, and readability**  
-- Delivered a **workflow recording** demonstrating automation in action  
-- Showcased hands-on expertise in **enterprise banking automation**  
+- Built **reusable step definitions and modular automation components**  
+- Structured **BDD scenarios** for clarity, readability, and maintainability  
+- Delivered a **recorded demo of the automated workflow** for recruiter and stakeholder review  
+- Demonstrated hands-on expertise in **pure automation of enterprise banking workflows**  
 
 ---
 
 ## 🧰 Technology Stack
-- **Java** – primary programming language for automation  
-- **Selenium WebDriver** – automated UI testing  
-- **Cucumber (BDD)** – readable and structured test execution  
+- **Java** – primary programming language  
+- **Selenium WebDriver** – UI automation  
+- **Cucumber (BDD)** – readable and structured test execution using Gherkin  
 - **Maven** – build and dependency management  
-- **Apache POI / Excel** – data-driven testing and multi-entry automation  
 - **Page Object Model (POM)** – modular and maintainable UI abstraction  
 
 ---
 
 ## 📝 Project Approach
-- **BDD methodology:** Test scenarios written in **Cucumber (BDD)** for clarity and maintainability  
+- **BDD methodology:** Test scenarios written in **Cucumber (BDD)** for structured and maintainable automation  
 - **Modular Step Definitions:** Reusable steps reduce duplication and increase scalability  
-- **Data-driven execution:** Uses Excel input to drive multiple customer creation scenarios  
-- **Workflow-focused automation:** Emphasis on **automation methodology**, not just application execution  
-- **Visualization:** Workflow recording and screenshots provide proof of automated execution  
+- **Workflow-focused automation:** Emphasis on **pure automation methodology**, not external data input  
+- **Automation Recording:** Screenshots and demo video provide proof of automated execution  
 
 ---
 
 ## 🔍 Workflow Architecture
 
-**Flow:** Excel Data → Step Definitions → Page Objects → Selenium WebDriver → One Window Banking UI  
 
-This architecture demonstrates **clean separation of test logic, business steps, and UI interaction**, ensuring maintainable and scalable automation.
+**Flow:** Gherkin Scenarios → Step Definitions → Page Objects → Selenium WebDriver → One Window Banking UI  
+
+This architecture demonstrates **clean separation of test logic, business steps, and UI interactions**, ensuring maintainable and scalable automation.
 
 ---
 
@@ -62,4 +61,4 @@ This architecture demonstrates **clean separation of test logic, business steps,
 
 ---
 
-> This project is part of my **professional automation portfolio**, highlighting my skills in **Selenium, Java, Cucumber (BDD), and Excel-driven data-driven testing** for enterprise banking systems. It demonstrates my ability to build **scalable, maintainable, and professional automation frameworks** that solve real-world banking workflows.
+> This project is part of my **professional automation portfolio**, highlighting my skills in **Selenium, Java, Cucumber (BDD), and pure automated enterprise workflows**. It demonstrates my ability to design **scalable, maintainable, and professional automation frameworks** for complex banking applications.
