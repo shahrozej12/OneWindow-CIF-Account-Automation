@@ -31,5 +31,6 @@ jobs:
           name: test-reports
           path: |
             target/cucumber-reports/**
-            target/extent-report.html
+            target/cucumber-reports.html
+            target/extent-cucumber-report.html
             target/surefire-reports/**
