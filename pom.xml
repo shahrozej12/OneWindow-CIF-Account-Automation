@@ -109,6 +109,7 @@
             <version>7.18.0</version>
         </dependency>
 
+
         <!-- Selenium Support for extra utilities -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -131,6 +132,8 @@
                 </configuration>
 
             </plugin>
+
+
 
             <!-- Compiler plugin to set the source/target version -->
             <plugin>

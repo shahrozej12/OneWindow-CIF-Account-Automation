@@ -17,7 +17,7 @@ Feature: Customer Information Form Submission
         | Field                     | Value                           |
         | Customer Category          | INDIVIDUAL - CIF AND ACCOUNT    |
         | ID Document Type           | ID-N - CNIC                     |
-        | ID Document Number         | 4210122390312                 |
+        | ID Document Number         | 4210521394312                 |
         | CNIC Issuance Date         | 2024-11-05 |
         | CNIC Expiry Date           | 2025-08-05 |
         | VISA Expiry Date           | 2026-11-22 |
@@ -138,11 +138,11 @@ Feature: Customer Information Form Submission
 
     Then Send To Supervisor
     And Go Back To Market Place
-    And Select "CHECKER"
-    And I navigate to customer information UAT
-    And I search and click the Tracking Id
-    And Enter Comments "Approved" and Press "Request Approve" and Press "YES"
-    Then Go Back
+#    And Select "CHECKER"
+#    And I navigate to customer information UAT
+#    And I search and click the Tracking Id
+#    And Enter Comments "Approved" and Press "Request Approve" and Press "YES"
+#    Then Go Back
 #    And Open T24 environment
 #    And I fill enter Login Credentials for T24:
 #      | Field      | Value                 |

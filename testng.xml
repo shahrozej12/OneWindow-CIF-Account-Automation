@@ -2,11 +2,14 @@
 <suite name="Cucumber Suite" parallel="false">
     <test name="Cucumber Test">
         <parameter name="continueAfterFailure" value="true"/>
+
+        <listeners>
+            <listener class-name="define.TestNGListener"/>
+            <listener class-name="com.aventstack.extentreports.testng.listener.ExtentITestListenerClassAdapter"/>
+        </listeners>
+
         <classes>
             <class name="runners.TestRunner"/>
         </classes>
-        <listeners>
-            <listener class-name="define.TestNGListener"/>
-        </listeners>
     </test>
 </suite>

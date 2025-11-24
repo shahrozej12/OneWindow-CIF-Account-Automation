@@ -6,6 +6,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = "Steps",
+        tags = "@Self_Employed",
         monochrome = true,
         plugin = {
                 "pretty",

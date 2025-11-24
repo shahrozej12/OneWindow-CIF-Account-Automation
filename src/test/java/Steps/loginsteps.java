@@ -55,7 +55,10 @@ public class loginsteps {
         // Setup Chrome
         ChromeOptions options = new ChromeOptions();
         options.setBinary("C:\\Users\\Shahroze.Janjua\\Downloads\\chrome-win64_stable\\chrome-win64\\chrome.exe");
-
+        options.addArguments("--disable-gpu");          // Safe for Windows/Linux
+        options.addArguments("--no-sandbox");           // Required for Linux runners
+        options.addArguments("--disable-dev-shm-usage"); // Avoid /dev/shm issues
+        options.addArguments("--window-size=1920,1080"); // Standard screen size
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(45));
