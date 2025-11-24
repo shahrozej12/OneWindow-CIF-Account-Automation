@@ -52,25 +52,33 @@ public class loginsteps {
     @Before
     public void setup(Scenario scenario) throws Exception {
 
-        // Setup Chrome
         ChromeOptions options = new ChromeOptions();
         options.setBinary("C:\\Users\\Shahroze.Janjua\\Downloads\\chrome-win64_stable\\chrome-win64\\chrome.exe");
-        options.addArguments("--disable-gpu");          // Safe for Windows/Linux
-        options.addArguments("--no-sandbox");           // Required for Linux runners
-        options.addArguments("--disable-dev-shm-usage"); // Avoid /dev/shm issues
-        options.addArguments("--window-size=1920,1080"); // Standard screen size
+
+
+            options.addArguments("--headless=new");
+//            options.addArguments("--disable-gpu");
+//            options.addArguments("--no-sandbox");
+//            options.addArguments("--disable-dev-shm-usage");
+//            options.addArguments("--window-size=1920,1080");
+
+
+        // Initialize driver
         driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+
+
+
         wait = new WebDriverWait(driver, Duration.ofSeconds(45));
+
         // Initialize recorder
-        recorder = new VideoRecorder();
+            recorder = new VideoRecorder();
 
-        // Ensure recordings folder exists
-        File folder = new File("recordings");
-        if (!folder.exists()) folder.mkdirs();
+            // Ensure recordings folder exists
+            File folder = new File("recordings");
+            if (!folder.exists()) folder.mkdirs();
 
-        // Create video file name
-        String videoFile = "recordings/" + scenario.getName().replaceAll("[^a-zA-Z0-9]", "_") + ".mp4";
+            // Create video file name
+            String videoFile = "recordings/" + scenario.getName().replaceAll("[^a-zA-Z0-9]", "_") + ".mp4";
 
         // Start recording
         recorder.startRecording(videoFile);
@@ -108,6 +116,7 @@ public class loginsteps {
 
     @When("I log in")
     public void i_log_in() {
+        runThreadsAfterFormSubmission();
         driver.findElement(By.xpath(XPathLocators.LOGIN_BUTTON)).click();
         runThreadsAfterFormSubmission();
         try {
