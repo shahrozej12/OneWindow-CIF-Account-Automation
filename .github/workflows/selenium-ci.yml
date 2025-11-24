@@ -23,22 +23,35 @@ jobs:
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@v1
 
+      - name: List test resources
+        run: ls -R src/test/resources
+
+      - name: Create report directories
+        run: |
+          mkdir -p target/cucumber-reports/html
+          mkdir -p target/cucumber-reports/json
+          mkdir -p target/cucumber-reports/xml
+          mkdir -p target/extent-cucumber-report
+
       - name: Run Tests
         run: mvn clean test
 
-      - name: List test resources
-        run: ls -R src/test/resources
+      - name: List generated reports
+        run: ls -R target
 
       - name: Upload Reports
         uses: actions/upload-artifact@v4
         with:
           name: test-reports
           path: |
-            target/cucumber-reports/**
+            target/cucumber-reports/html/**
+            target/cucumber-reports/json/**
+            target/cucumber-reports/xml/**
+            target/extent-cucumber-report/**
+            target/surefire-reports/**
             target/cucumber-reports.html
             target/extent-cucumber-report.html
-            target/surefire-reports/**
-      # Add this step to upload your recorded videos
+
       - name: Upload Videos
         uses: actions/upload-artifact@v4
         with:
