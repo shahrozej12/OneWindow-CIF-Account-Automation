@@ -55,8 +55,7 @@ public class loginsteps {
         ChromeOptions options = new ChromeOptions();
         options.setBinary("C:\\Users\\Shahroze.Janjua\\Downloads\\chrome-win64_stable\\chrome-win64\\chrome.exe");
 
-
-            options.addArguments("--headless=new");
+              options.addArguments("--headless=new");
 //            options.addArguments("--disable-gpu");
 //            options.addArguments("--no-sandbox");
 //            options.addArguments("--disable-dev-shm-usage");
@@ -68,28 +67,29 @@ public class loginsteps {
 
 
 
-        wait = new WebDriverWait(driver, Duration.ofSeconds(45));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        driver.manage().window().maximize();
 
-        // Initialize recorder
-            recorder = new VideoRecorder();
-
-            // Ensure recordings folder exists
-            File folder = new File("recordings");
-            if (!folder.exists()) folder.mkdirs();
-
-            // Create video file name
-            String videoFile = "recordings/" + scenario.getName().replaceAll("[^a-zA-Z0-9]", "_") + ".mp4";
-
-        // Start recording
-        recorder.startRecording(videoFile);
+//        // Initialize recorder
+//            recorder = new VideoRecorder();
+//
+//            // Ensure recordings folder exists
+//            File folder = new File("recordings");
+//            if (!folder.exists()) folder.mkdirs();
+//
+//            // Create video file name
+//            String videoFile = "recordings/" + scenario.getName().replaceAll("[^a-zA-Z0-9]", "_") + ".mp4";
+//
+//        // Start recording
+//        recorder.startRecording(videoFile);
 
         // Add shutdown hook: ensures recording stops even if test is manually stopped
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            if (recorder != null && recorder.isRecording()) {
-                recorder.stopRecording();
-                System.out.println("Recording stopped via shutdown hook.");
-            }
-        }));
+//        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+//            if (recorder != null && recorder.isRecording()) {
+//                recorder.stopRecording();
+//                System.out.println("Recording stopped via shutdown hook.");
+//            }
+//        }));
 
     }
 
@@ -116,7 +116,6 @@ public class loginsteps {
 
     @When("I log in")
     public void i_log_in() {
-        runThreadsAfterFormSubmission();
         driver.findElement(By.xpath(XPathLocators.LOGIN_BUTTON)).click();
         runThreadsAfterFormSubmission();
         try {
@@ -201,7 +200,8 @@ public class loginsteps {
 
             cifHelpers.selectCustomerSegment(XPathLocators.SECTOR_CODE_DROPDOWN, data.get("Sector Code"));
             pause(2000);
-            cifHelpers.selectNationality(XPathLocators.NATIONALITY_DROPDOWN, data.get("Nationality"));
+            String nationality0 = data.get("Nationality");
+            cifHelpers.selectNgSelectOption(XPathLocators.NATIONALITY_DROPDOWN, nationality0);
             pause(2000);
             cifHelpers.selectAssanAccount(XPathLocators.ASAN_ACCOUNT_DROPDOWN, data.get("Assan Account"));
             pause(1000);
@@ -692,10 +692,10 @@ public class loginsteps {
     @After
     public void tearDown(Scenario scenario) {
         // Stop video recording first
-        if (recorder != null && recorder.isRecording()) {
-            recorder.stopRecording();
-            System.out.println("Recording stopped for scenario: " + scenario.getName());
-        }
+//        if (recorder != null && recorder.isRecording()) {
+//            recorder.stopRecording();
+//            System.out.println("Recording stopped for scenario: " + scenario.getName());
+//        }
 
         // Then close browser
         if (driver != null) {

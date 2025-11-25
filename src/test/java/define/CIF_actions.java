@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class CIF_actions {
     private WebDriver driver;
@@ -62,26 +63,43 @@ public class CIF_actions {
         WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(optionXPath)));
         clickElement(option);
     }
+    public void selectNgSelectOption(String dropdownXPath, String optionName) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
-    public void selectNationality(String dropdownXPath, String optionName) {
-        waitUntilSpinnerIsInvisible();
+        // 1. Click dropdown to open it
         WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(dropdownXPath)));
-        clickElement(dropdown);
+        dropdown.click();
 
-        // Add 3-second wait before option selection
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        // 2. Find the input inside the expanded dropdown
+        WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[@aria-expanded='true']//input[@type='text']")
+        ));
+
+        // 3. Type the option letter by letter
+        input.clear();
+        for (char c : optionName.toCharArray()) {
+            input.sendKeys(String.valueOf(c));
+            try { Thread.sleep(200); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
         }
 
-        // Use contains() for partial match
-        String optionXPath = String.format("//ng-select[@name='NATIONALIT']//span[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '%s')]",
-                optionName.toLowerCase());
+        // 4. Wait for the option to appear in the dropdown panel
+        String optionXPath = String.format(
+                "//div[contains(@class,'ng-dropdown-panel')]//div[contains(@class,'ng-option')]//span[text()='%s']",
+                optionName.trim()
+        );
 
-        WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(optionXPath)));
-        clickElement(option);
+        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(optionXPath)));
+
+        // 5. Click the option using JavaScript
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
+
+        // Optional: small pause for Angular to process selection
+        try { Thread.sleep(200); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
     }
+
+
+
+
     public void selectAssanAccount(String dropdownXPath, String optionName) {
         waitUntilSpinnerIsInvisible();
         WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(dropdownXPath)));
@@ -210,13 +228,39 @@ public class CIF_actions {
         WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(optionXPath)));
         clickElement(option);
     }
+
     public void selectPlaceBirth(String dropdownXPath, String optionName) {
-        waitUntilSpinnerIsInvisible();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+        // 1. Click dropdown to open it
         WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(dropdownXPath)));
-        clickElement(dropdown);
-        String optionXPath = String.format("//ng-select[@name='BIRTH_PLACE']//span[normalize-space()='%s']", optionName);
-        WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(optionXPath)));
-        clickElement(option);
+        dropdown.click();
+
+        // 2. Find the input inside the expanded dropdown
+        WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[@aria-expanded='true']//input[@type='text']")
+        ));
+
+        // 3. Type the option letter by letter
+        input.clear();
+        for (char c : optionName.toCharArray()) {
+            input.sendKeys(String.valueOf(c));
+            try { Thread.sleep(200); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        }
+
+        // 4. Wait for the option to appear in the dropdown panel
+        String optionXPath = String.format(
+                "//div[contains(@class,'ng-dropdown-panel')]//div[contains(@class,'ng-option')]//span[text()='%s']",
+                optionName.trim()
+        );
+
+        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(optionXPath)));
+
+        // 5. Click the option using JavaScript
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
+
+        // Optional: small pause for Angular to process selection
+        try { Thread.sleep(200); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
     }
 
 //    Contact Detail
