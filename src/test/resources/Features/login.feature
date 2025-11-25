@@ -17,7 +17,7 @@ Feature: Customer Information Form Submission
         | Field                     | Value                           |
         | Customer Category          | INDIVIDUAL - CIF AND ACCOUNT    |
         | ID Document Type           | ID-N - CNIC                     |
-        | ID Document Number         | 4210521394312                 |
+        | ID Document Number         | 4210529394312                 |
         | CNIC Issuance Date         | 2024-11-05 |
         | CNIC Expiry Date           | 2025-08-05 |
         | VISA Expiry Date           | 2026-11-22 |
