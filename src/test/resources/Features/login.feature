@@ -125,21 +125,21 @@ Feature: Customer Information Form Submission
 
     Then Submit the form
 
-    And Uploading Files:
-      | Document Name      | File Path                           |
-  |   IF ACCOUNT RISK LEVEL HIGH AND BUSINESS | D:/CIF_Image_Auto/AOF.PNG|
-  | Attested copy of CNIC   | D:/CIF_Image_Auto/AOF.PNG|
-      | Proof of Income        | D:/CIF_Image_Auto/Id Document.PNG    |
-      | Crop and Upload Signature Image Only        | C:/IRS.PNG    |
-      | Nadra Verysis   | D:/CIF_Image_Auto/CRS.PNG|
-      | Specimen Signature Card    | D:/CIF_Image_Auto/SSC.jpg|
-
-
-
-    Then Send To Supervisor
-    And Go Back To Market Place
+#    And Uploading Files:
+#      | Document Name      | File Path                           |
+#  |   IF ACCOUNT RISK LEVEL HIGH AND BUSINESS | D:/CIF_Image_Auto/AOF.PNG|
+#  | Attested copy of CNIC   | D:/CIF_Image_Auto/AOF.PNG|
+#      | Proof of Income        | D:/CIF_Image_Auto/Id Document.PNG    |
+#      | Crop and Upload Signature Image Only        | C:/IRS.PNG    |
+#      | Nadra Verysis   | D:/CIF_Image_Auto/CRS.PNG|
+#      | Specimen Signature Card    | D:/CIF_Image_Auto/SSC.jpg|
+#
+#
+#
+#    Then Send To Supervisor
+#    And Go Back To Market Place
 #    And Select "CHECKER"
-#    And I navigate to customer information UAT
+#    And I navigate to customer  information UAT
 #    And I search and click the Tracking Id
 #    And Enter Comments "Approved" and Press "Request Approve" and Press "YES"
 #    Then Go Back
